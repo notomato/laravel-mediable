@@ -11,6 +11,14 @@ namespace Plank\Mediable\SourceAdapters;
  */
 class RemoteUrlAdapter implements SourceAdapterInterface
 {
+    const MIME_EXTENSION_MAP = [
+        'image/gif' => 'gif',
+        'image/jpeg' => 'jpg',
+        'image/jpg' => 'jpg',
+        'image/png' => 'png',
+        'image/tiff' => 'tiff'
+    ];
+
     /**
      * Cache of headers loaded from the remote server.
      * @var array
@@ -58,7 +66,8 @@ class RemoteUrlAdapter implements SourceAdapterInterface
      */
     public function extension()
     {
-        return pathinfo($this->source, PATHINFO_EXTENSION);
+        $extension = pathinfo($this->source, PATHINFO_EXTENSION);
+        return $extension ?: self::MIME_EXTENSION_MAP[$this->mimeType()];
     }
 
     /**
