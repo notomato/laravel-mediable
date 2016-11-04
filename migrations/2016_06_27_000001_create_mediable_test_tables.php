@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
@@ -15,13 +16,13 @@ class CreateMediableTestTables extends Migration
      */
     public function up()
     {
-        Schema::create('sample_mediables', function(Blueprint $table){
+        Schema::create('sample_mediables', function (Blueprint $table) {
             $table->increments('id');
             $table->timestamps();
             $table->softDeletes();
         });
 
-        Schema::table('media', function(Blueprint $table){
+        Schema::table('media', function (Blueprint $table) {
             $table->softDeletes();
         });
     }
@@ -33,7 +34,7 @@ class CreateMediableTestTables extends Migration
      */
     public function down()
     {
-        Schema::table('media', function(Blueprint $table){
+        Schema::table('media', function (Blueprint $table) {
             $table->dropColumn('deleted_at');
         });
         Schema::drop('sample_mediables');

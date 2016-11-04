@@ -72,7 +72,7 @@ You can retrieve media attached to a file by refering to the tag to which it was
     <?php
     $media = $post->getMedia('thumbnail');
 
-This returns a collection of all media assigned to that tag. In cases where you only need one `Media` entity, you can instead use `firstMedia()`.
+This returns a collection of all media assigned to that tag. In cases where you only need one ``Media`` entity, you can instead use ``firstMedia()``.
 
 ::
 
@@ -96,6 +96,30 @@ You can also get all media attached to a model, grouped by tag.
 
     <?php
     $post->getAllMediaByTag();
+
+Media Order
+--------------------------
+
+The system keeps track of the order in which ``Media`` are attached to each ``Mediable`` model's tags and are always returned in the same order.
+
+To change the order of media assigned to a given tag, or to insert a new item at a particular index manipulate the eloquent collection then use the ``syncMedia()`` method to commit the changes.
+
+::
+
+    <?php
+    $media = $post->getMedia('gallery');
+    $media = $media->prepend($new_media);
+    $post->syncMedia($media, 'gallery');
+
+An ``ORDER BY`` clause is automatically applied to all queries run on the ``media()`` relationship. To disable this default behaviour, use the ``unordered()`` query scope.
+
+::
+
+    <?php
+    $mediable->media()
+        ->unordered()
+        ->...
+
 
 Checking for the Presence of Media
 ----------------------------------
